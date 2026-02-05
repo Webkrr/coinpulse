@@ -6,9 +6,12 @@ import { Link, TrendingDown } from "lucide-react";
 import { cn, formatCurrency } from "@/lib/utils";
 import { TrendingUp } from "lucide-react";  
 import { fetcher } from "@/lib/coingecko.actions";
+import { CoinOverviewFallback } from "./fallback";
 
 const CoinOverview = async() =>{
-    const coin = await fetcher<CoinDetailsData>("coins/bitcoin", {
+  let coin;
+  try{
+     coin = await fetcher<CoinDetailsData>("coins/bitcoin", {
         localization: false,
         tickers: false,
         market_data: true,
@@ -16,6 +19,11 @@ const CoinOverview = async() =>{
         developer_data: false,
         sparkline: false,
       });
+  }catch(error){
+    console.error("Error fetching coin details:", error);
+    return <CoinOverviewFallback />
+  }
+
     return(
         <div id="coin-overview">
           <div className="header pt-2 flex items-center gap-3">

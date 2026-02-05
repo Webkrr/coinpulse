@@ -6,13 +6,20 @@ import DataTable from "@/components/DataTable";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { cn, formatCurrency } from "@/lib/utils";
 import { fetcher } from "@/lib/coingecko.actions";
+import { TrendingCoinsFallback } from "./fallback";
 
 const TrendingCoins = async () => {
-  const trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
+  let trendingCoins;
+  try{
+  trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
     "search/trending",
     {},
     300
   );
+}catch(error){
+  console.error("Error fetching trending coins:", error);
+  return <TrendingCoinsFallback />
+}
 
   const columns: DataTableColumn<TrendingCoin>[] = [
     {
