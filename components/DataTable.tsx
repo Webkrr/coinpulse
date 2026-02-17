@@ -11,13 +11,26 @@ import { cn } from "@/lib/utils";
 
 import React from "react";
 
-const DataTable = <T,>({columns, data, rowKey, tableClassName, headerRowClassName, headerCellClassName, bodyRowClassName, bodyCellClassName, headerClassName}: DataTableProps<T>) => {
+const DataTable = <T,>({
+  columns, 
+  data, 
+  rowKey, 
+  tableClassName, 
+  headerClassName,
+  headerRowClassName, 
+  headerCellClassName, 
+  bodyRowClassName, 
+  bodyCellClassName, 
+  }: DataTableProps<T>) => {
     return (
         <Table className={cn('custom-scrollbar', tableClassName)}>
             <TableHeader className={headerClassName}>
                 <TableRow className={cn('hover:bg-transparent!', headerRowClassName)}>
                    {columns.map((column, i) => (
-                    <TableHead key={i} className={cn('bg-dark-400 text-purple-100 py-4 first:pl-5 last:pr-5', headerCellClassName)}>
+                    <TableHead 
+                    key={i} 
+                    className={cn('bg-dark-400 text-purple-100 py-4 first:pl-5 last:pr-5',
+                    headerCellClassName)}>
                         {column.header}
                     </TableHead>
                    ))}
